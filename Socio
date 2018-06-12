@@ -1,0 +1,52 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Obligatorio;
+
+/**
+ *
+ * @author Franco Galeano y Felipe Estrella
+ */
+public class Socio extends Persona{
+
+    //variables de instancia
+    private int edad;
+    private String direccion;
+
+    //Constructores
+    public Socio() {
+        super();
+        this.setEdad(18);
+        this.setDireccion("Av. Brasil");
+    }
+
+    public Socio(String unNombre, int unaEdad, int unaCi, String unaDireccion) {
+        super(unNombre,unaCi);
+        this.setEdad(unaEdad);
+        this.setDireccion(unaDireccion);
+    }
+
+    //metodos de acceso y modificacion    
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int unaEdad) {
+        this.edad = unaEdad;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String unaDireccion) {
+        this.direccion = unaDireccion;
+    }
+
+    @Override
+    public String toString() {
+        return ("Socio de Nombre " + this.getNombre() + " con  " + this.getEdad() + " años, de CI " + this.getCi() + " y de dirección " + this.getDireccion());
+    }
+}
