@@ -5,7 +5,7 @@
  */
 package Obligatorio;
 
-import java.util.Scanner;
+import java.util.*;
 
 /**
  *
@@ -40,7 +40,7 @@ public class Prueba {
                     lista.agregarActividad(ingresarActividad(lista));
                 }else{
                     System.out.println("No hay animador, ingrese a la opción"
-                            + " 2) Registrar Animador del Menú");
+                            + " Registrar Animador del Menú");
                 }
                 hayActividad=true;
                 break;
@@ -55,20 +55,52 @@ public class Prueba {
                 break;
             case 5:
                 System.out.println("Consulta por Actividad");
+                if (hayActividad){
+                    
+                }else{
+                    System.out.println("Ingrese a la opción Registrar Actividad"
+                            + " del Menú previamente");
+                }
                 
                 break;
             case 6:
+                if(hayActividad){
                 System.out.println("Listado Ordenado de Actividades");
                 System.out.println("La lista de Actividades es :");
+                }else{
+                    System.out.println("Ingrese a la opción Registrar Actividad"
+                            + " del Menú previamente");
+                }
                 break;
             case 7:
+                if(hayActividad){
                 System.out.println("Baja de Actividad");
+                lista.eliminarActividad(bajaActividad(lista));
+                
+                
+                //Esta por la mitad, falta la lista ordenada por nombre y la lista de Inscriptos a llamar por telefono
+                }else{
+                    System.out.println("Ingrese a la opción Registrar Actividad"
+                            + " del Menú previamente");
+                }
                 break;
             case 8:
+                if(hayActividad){
                 System.out.println("Actividades Preferidas por los Socios");
+                actividadPreferida(lista);
+                }else{
+                    System.out.println("Ingrese a la opción Registrar Actividad"
+                            + " del Menú previamente");
+                }
                 break;
             case 9:
+                if (hayAnimador){
                 System.out.println("Animadores sin Actividades asignadas");
+                
+                }else{
+                    System.out.println("No hay animador, ingrese a la opción"
+                            + " Registrar Animador del Menú");
+                }
                 break;
             case 10:
                 System.out.println("Terminado");
@@ -78,6 +110,7 @@ public class Prueba {
             }
     }while(opcion!=10);
     }
+    //case 1
     public static Socio ingresarSocio() {
         //Se hace el método para poder ingresar los datos de los Socios 
         Scanner input = new Scanner(System.in);
@@ -88,21 +121,10 @@ public class Prueba {
         System.out.println("Ingrese un Nombre");
         nombre = input.nextLine();
         }
-        System.out.println("Ingresar Edad (entre 18-99)");
-        int edad = input.nextInt();
-        while (validarEdad(edad)) {
-            System.out.println("Ingrese Edad entre 18 y 99");
-            edad = input.nextInt();
-        }
-        System.out.println("Ingresar Cedula de identidad (sin guiones)");
-        int cedula = input.nextInt();
-        while (validarPositivo(cedula)){
-            System.out.println("Ingrese Cédula válida");
-            cedula = input.nextInt();
-        }
+        int edad=validarNumeroEntre("Ingresar Edad (entre 18-99)",18,99);
+        int cedula=validarNumero("Ingresar Cedula de identidad (sin guiones)");
         System.out.println("Ingresar Dirección");
         String direccion = input.nextLine();
-        direccion = input.nextLine();
         while (validarTexto(direccion)){
             System.out.println("Ingresar Dirección válida");
             direccion = input.nextLine();
@@ -110,6 +132,7 @@ public class Prueba {
         Socio socio = new Socio(nombre, edad, cedula, direccion);
         return socio;
     }
+    //Case 2
     public static Animador ingresarAnimador(){
         Scanner input = new Scanner(System.in);
         System.out.println("Ingrese Nombre del Animador");
@@ -119,137 +142,146 @@ public class Prueba {
         System.out.println("Ingrese un Nombre");
         nombre = input.nextLine();
         }
-        System.out.println("Ingresar Cedula de identidad (sin guiones)");
-        int cedula = input.nextInt();
-        while (validarPositivo(cedula)){
-            System.out.println("Ingrese Cédula válida");
-            cedula = input.nextInt();
-        }
-        System.out.println("Ingrese Años de Experiencia");
-        int añosexp = input.nextInt();
+        int cedula = validarNumero("Ingresar Cedula de identidad (sin guiones)");
+        int añosexp = validarNumero("Ingrese Años de Experiencia");
         Animador animador= new Animador(nombre,cedula,añosexp);
         return animador;
     }
-    public static Actividad ingresarActividad(Sistema unArrayList) {
+    //Case 3
+    public static Actividad ingresarActividad(Sistema unaLista) {
         //Se hace el método para poder ingresar los datos de la Actividad
-        Scanner inp = new Scanner(System.in);
-        System.out.println("Ingrese día de la Actividad (entre 1-31)");
-        int dia = inp.nextInt();
-        while (dia < 1 || dia > 31) {
-            //Se valida que el día este entre 1 y 31
-            System.out.println("Ingrese día entre 1-31");
-            dia = inp.nextInt();
-        }
-        System.out.println("Ingrese tipo de Actividad \n  1-teatro \n  2-cine \n"
+        //Se valida el dia
+        int dia =validarNumeroEntre("Ingrese día de la Actividad (entre 1-31)",1,31);
+        // Se valida que el tipo de Actividad este entre 1-7
+        int tipo=validarNumeroEntre("Ingrese tipo de Actividad \n  1-teatro \n  2-cine \n"
                 + "  3-viaje \n  4-paseo local \n  5-paseo interdepartamental \n"
-                + "  6- caminata \n  7- otro ");
-        int tipo = inp.nextInt();
-        while (tipo < 1 || tipo > 7) {
-            //Se valida que la actividad este entre 1 y 7
-            System.out.println("Ingrese actividad entre 1-7");
-            tipo = inp.nextInt();
-        }
-        System.out.println("Ingrese Capacidad Máxima");
-        int capacidadmaxima = inp.nextInt();
+                + "  6- caminata \n  7- otro ",1,7);
         //Se valida que la capacidad no sea negativa
-        while (validarPositivo(capacidadmaxima)){
-            System.out.println("Ingrese una capacidad válida");
-            capacidadmaxima = inp.nextInt();
-        }
-        System.out.println("Ingrese costo");
-        int costo = inp.nextInt();
-        while (validarPositivo(costo)){
-            System.out.println("Ingrese un costo válido");
-            costo = inp.nextInt();
-        }
-        System.out.println("Ingrese la hora de comienzo (entre 7-21)");
-        int horacomienzo = inp.nextInt();
-        while (horaActividad(horacomienzo)) {
-            System.out.println("Seleccione hora de comienzo válido (entre 7-21)");
-            horacomienzo = inp.nextInt();
-        }
+        int capacidadmaxima=validarNumero("Ingrese Capacidad Máxima");
+        int costo =validarNumero("Ingrese costo");
+        int horacomienzo =validarNumeroEntre("Ingrese la hora de comienzo (entre 7-21)",7,21);
+        //Se valida que exista el animador
         System.out.println("Que animador quiere que se le asigne");
                 System.out.println("Seleccione número de Animador");
-                for(int i=0;i<unArrayList.cantidadAnimadores();i++){
+                for(int i=0;i<unaLista.cantidadAnimadores();i++){
                     System.out.print((i+1)+") ");
-                    System.out.println(unArrayList.getListaAnimadores().get(i));
+                    System.out.println(unaLista.getListaAnimadores().get(i));
                 }
-                int ani=inp.nextInt();
-                while (ani >unArrayList.cantidadAnimadores()){
-                    System.out.println("Ingrese número válido");
-                    ani=inp.nextInt();
-                }
-        Actividad actividad = new Actividad(dia, tipo, capacidadmaxima, costo, horacomienzo,unArrayList.getListaAnimadores().get(ani-1));
+                int ani= validarNumeroEntre("",1,unaLista.cantidadAnimadores());
+        Actividad actividad = new Actividad(dia, tipo, capacidadmaxima, costo, horacomienzo,unaLista.getListaAnimadores().get(ani-1));
         return actividad;
     }
-    public static Inscripcion ingresarInscripcion(Sistema unArrayList) {
+    //Case 4
+    public static Inscripcion ingresarInscripcion(Sistema unaLista) {
         //Se crea el método para ingresar el Socio
         Scanner ins = new Scanner(System.in);
         System.out.println("Seleccione número de Socio");
-                    for(int i=0;i<=unArrayList.cantidadSocios();i++){
-                        System.out.print((i+1)+") ");
-                        System.out.println(unArrayList.getListaSocios().get(i));
+                    for(int i=0;i<unaLista.cantidadSocios();i++){
+                        System.out.println((i+1)+")"+unaLista.getListaSocios().get(i));
                     }
-                    int soc=ins.nextInt();
-                    while (soc >unArrayList.cantidadAnimadores()){
-                    System.out.println("Ingrese número válido");
-                    soc=ins.nextInt();
-                    }
+                    //Se valida que el socio sea valido
+                    int socio=validarNumeroEntre("",1,unaLista.cantidadSocios()+1);
                     System.out.println("Seleccione número de Actividad");
-                    for(int i=0;i<unArrayList.cantidadActividades();i++){
-                        System.out.print((i+1)+") ");
-                        System.out.println(unArrayList.getListaActividades().get(i));
+                    for(int i=0;i<unaLista.cantidadActividades();i++){
+                        System.out.print((i+1)+")"+unaLista.getListaActividades().get(i));
                     }
-                    int act=ins.nextInt();
-                    while (soc >unArrayList.cantidadAnimadores()){
-                    System.out.println("Ingrese número válido");
-                    act=ins.nextInt();
-                    }
-                    System.out.println("Ingrese hora en la que quiere que se lo "
-                            + "pase a buscar,\npor lo menos una hora antes de la"
-                            + " actividad ("+unArrayList.getListaActividades().get(act).getHoracomienzo()+"hs)"
-                                    + " y entre 6-20 hs");
-                    int horarecogida = ins.nextInt();
+                    //Se valida que la actividad sea valida
+                    int actividad =validarNumeroEntre("",0,unaLista.cantidadActividades());
                     //Se valida que la hora de recogida sea una hora antes del comienzo de la actividad y dentro del horario establecido
-                    while ((horarecogida + 1 > unArrayList.getListaActividades().get(act).getHoracomienzo()) || (horarecogida < 6)) {
-                        System.out.println("Ingrese una hora de Recogida una "
-                                + "hora antes del comienzo de la actividad "
-                                + "(" + unArrayList.getListaActividades().get(act).getHoracomienzo() + ") y entre "
-                                + "6-20hs");
-                        horarecogida = ins.nextInt();
-                    }
-        System.out.println("Ingrese Telefono de Contacto");
-        int telefono = ins.nextInt();
-        while (validarPositivo(telefono)){
-            System.out.println("Ingrese un teléfono correcto");
-            telefono = ins.nextInt();
-        }
-        Inscripcion inscripcion = new Inscripcion(horarecogida, unArrayList.getListaSocios().get(soc-1), unArrayList.getListaActividades().get(act-1), telefono);
+                    int horarecogida=validarNumeroEntre("Ingrese hora en la que "
+                            + "quiere que se lo pase a buscar,\npor lo menos una"
+                            + " hora antes de la actividad "
+                            + "("+unaLista.getListaActividades().get(actividad).getHoracomienzo()+"hs)"
+                            + " y  entre 6-20 hs",6,(unaLista.getListaActividades().get(actividad).getHoracomienzo())-1);
+        int telefono=validarNumero("Ingrese Telefono de Contacto");
+        Inscripcion inscripcion = new Inscripcion(horarecogida, unaLista.getListaSocios().get(socio-1), unaLista.getListaActividades().get(actividad-1), telefono);
         return inscripcion;
     }
-    public static Sistema bajaActividad(Sistema unaLista){
-        System.out.println("Seleccione la Actividad que se quiere dar de baja");
+    // Case 7
+    public static Actividad bajaActividad(Sistema unaLista){
+        System.out.println("Seleccione el número Actividad que se quiere dar de baja");
         for (int i=0;i<unaLista.cantidadActividades();i++){
             System.out.println((i+1)+")"+unaLista.getListaActividades().get(i));
-            
         }
+        int baja=validarNumeroEntre("",1,unaLista.cantidadActividades()+1);
+        for (int o=0;o<unaLista.cantidadInscripciones();o++){
+            if(unaLista.getListaInscripciones().get(o).getActividad()==unaLista.getListaActividades().get(baja-1)){
+                System.out.println();   
+            }
+        }
+        int socio=0;
+        for (int f=0;f<unaLista.cantidadInscripciones();f++){
+            if (unaLista.getListaInscripciones().get(f).getActividad()==unaLista.getListaActividades().get(baja-1)){
+                System.out.println("Se tiene que llamar a "+unaLista.getListaInscripciones().get(f).getSocio());
+                unaLista.getListaInscripciones().remove(f);
+                socio=socio+1;
+            }
+        }
+        Actividad bajaActividad = unaLista.getListaActividades().get(baja-1);
+        return bajaActividad;
     }
-    //Boolean para validar que el texto no sea vacío
-    public static boolean validarTexto(String texto){
-        return texto.trim().isEmpty();
+    //Case 8
+    public static String actividadPreferida(Sistema unaLista){
+        int [] preferida = new int [8];
+        //Se crea un Array con los tipos de Actividades
+        for (int i=0;i<unaLista.cantidadInscripciones();i++){
+            int aux =unaLista.getListaInscripciones().get(i).getActividad().getTipo();
+            preferida [aux]=preferida[aux]+1;
+        }
+        int favorita=-1;
+        for (int o=0;o<preferida.length;o++){
+            if(preferida[o]>favorita){
+                favorita = preferida[o];
+            }
+        }
+        String fav="la Actividad favorita es"+favorita;
+        return fav;
     }
-    //Boolean que valide que sea positivo el número
-    public static boolean validarPositivo(int numero){
-        return numero<0;
-    }
-    //Boolean que valida la Edad
-    public static boolean validarEdad(int edad){
-        return (edad <18 || edad>99);
-    }
-    public static boolean horaActividad(int hora){
-        return (hora<7 || hora >21);
+    //Case 9
+   public static String consultaAnimador(Sistema unaLista){
+       int falta=0;
+        for(int i =0;i<unaLista.cantidadAnimadores();i++){
+            for(int o =0;o<unaLista.cantidadActividades();o++){
+                if (unaLista.getListaAnimadores().get(i)==unaLista.getListaActividades().get(o).getAnimador()){
+                   falta=falta+1;
+                }
+            }
+            if (falta==0){
+                System.out.println(unaLista.getListaAnimadores().get(i)+" no tiene actividad asignada");
+            }
+            falta=0;
+        }
+        
+        return "Puto";
     }
     static boolean hayAnimador=false;
     static boolean hayActividad=false;
     static boolean haySocio=false;
+    
+    //Boolean para validar que el texto no sea vacío
+    public static boolean validarTexto(String texto){
+        return texto.trim().isEmpty();
+    }
+    //Se valida que el numero sea mayor a 0
+    public static int validarNumero(String mensaje){
+        System.out.println(mensaje);
+        Scanner in = new Scanner (System.in);
+        int numero=in.nextInt();
+        while  (numero<0){
+            System.out.println("Ingrese un valor positivo");
+            numero=in.nextInt();
+        }
+        return numero;
+    }
+    //Se crea un método que valide que un numero se encuentre entre un amximo y un minimo
+    public static int validarNumeroEntre(String mensaje,int min, int max){
+        System.out.println(mensaje);
+        Scanner in = new Scanner (System.in);
+        int numero=in.nextInt();
+        while  (numero<min||numero>max){
+            System.out.println("Ingrese un valor entre "+min +" y "+ max);
+            numero=in.nextInt();
+        }
+        return numero;
+    }
 }
