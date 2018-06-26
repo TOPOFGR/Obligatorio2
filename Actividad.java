@@ -5,6 +5,8 @@
  */
 package Obligatorio;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Franco Galeano y Felipe Estrella
@@ -18,6 +20,7 @@ public class Actividad {
     private int costo;
     private int horacomienzo;
     private Animador animador;
+    private ArrayList <Inscripcion> ListaInscripciones;
 
     //constructores
     public Actividad() {
@@ -36,6 +39,7 @@ public class Actividad {
         this.setCosto(unCosto);
         this.setHoracomienzo(unaHoracomienzo);
         this.setAnimador(unAnimador);
+        this.ListaInscripciones = new ArrayList<>();
     }
 
     //metodos de acceso y modificación
@@ -85,6 +89,26 @@ public class Actividad {
 
     public void setAnimador(Animador unAnimador) {
         this.animador = unAnimador;
+    }
+    
+    public ArrayList<Inscripcion> getListaInscripciones() {
+        return ListaInscripciones;
+    }
+
+    public void agregarInscripcion(Inscripcion unaInscripcion) {
+        this.getListaInscripciones().add(unaInscripcion);
+        unaInscripcion.getActividad().getListaInscripciones().add(unaInscripcion);
+    }
+
+    public void eliminarInscripcion(Inscripcion unaInscripcion) {
+        this.getListaInscripciones().remove(unaInscripcion);
+    }
+
+    public int cantidadActividades() {
+        return this.getListaInscripciones().size();
+    }
+    public boolean cuposDisponibles(){
+        return this.getListaInscripciones().size()<this.getCapacidadmaxima();
     }
 
     @Override
