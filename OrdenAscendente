@@ -1,0 +1,17 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Obligatorio;
+import java.util.Comparator;
+/**
+ *
+ * @author Franco Galeano
+ */
+public class OrdenAscendente implements Comparator <Socio>{
+    @Override
+    public int compare (Socio socio1,Socio socio2){
+     return socio1.getNombre().compareTo(socio2.getNombre());
+}
+}
