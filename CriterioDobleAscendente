@@ -1,0 +1,23 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package Obligatorio;
+
+import java.util.Comparator;
+
+/**
+ *
+ * @author Franco Galeano 
+ */
+public class CriterioDobleAscendente implements Comparator <Actividad>{
+    @Override
+    public int compare (Actividad actividad1, Actividad actividad2){
+    int diferencia =(actividad1.getDia()-actividad2.getDia());
+    if(diferencia==0){
+    diferencia = actividad1.getTipo()-actividad2.getTipo();
+}
+    return diferencia;
+    }
+}
